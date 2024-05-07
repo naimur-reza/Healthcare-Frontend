@@ -1,4 +1,6 @@
 "use client";
+
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -32,6 +34,7 @@ interface IPatientRegisterFormData {
 }
 
 const RegisterPage = () => {
+  const [isLoading, setLoading] = useState(false);
   const router = useRouter();
   const {
     register,
@@ -44,9 +47,11 @@ const RegisterPage = () => {
     const data = modifyPayload(values);
     // console.log(data);
     try {
+      setLoading(true);
       const res = await registerPatient(data);
       // console.log(res);
       if (res?.data?.id) {
+        setLoading(false);
         toast.success(res?.message);
         const result = await userLogin({
           password: values.password,
@@ -59,6 +64,7 @@ const RegisterPage = () => {
       }
     } catch (err: any) {
       console.error(err.message);
+      setLoading(false);
     }
   };
 
