@@ -14,18 +14,8 @@ import { userLogin } from "@/services/actions/userLogin";
 import { storeUserInfo } from "@/services/auth.services";
 import PHForm from "@/components/Forms/PHForm";
 import PHInput from "@/components/Forms/PHInput";
-
-interface IPatientData {
-  name: string;
-  email: string;
-  contactNumber: string;
-  address: string;
-}
-
-interface IPatientRegisterFormData {
-  password: string;
-  patient: IPatientData;
-}
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 const RegisterPage = () => {
   const [isLoading, setLoading] = useState(false);
@@ -54,6 +44,26 @@ const RegisterPage = () => {
       console.error(err.message);
       setLoading(false);
     }
+  };
+
+  const schema = z.object({
+    password: z.string().min(6).max(20),
+    patient: z.object({
+      name: z.string().min(3).max(50),
+      email: z.string().email(),
+      contactNumber: z.string().min(10).max(10),
+      address: z.string().min(3).max(100),
+    }),
+  });
+
+  const defaultValues = {
+    patient: {
+      name: "",
+      email: "",
+      contactNumber: "",
+      address: "",
+    },
+    password: "",
   };
 
   return (
@@ -92,7 +102,11 @@ const RegisterPage = () => {
           </Stack>
 
           <Box>
-            <PHForm submit={onSubmit}>
+            <PHForm
+              submit={onSubmit}
+              resolver={zodResolver(schema)}
+              defaultValues={defaultValues}
+            >
               <Grid container spacing={2} my={1}>
                 <Grid item md={12}>
                   <PHInput

@@ -10,6 +10,8 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import PHForm from "@/components/Forms/PHForm";
 import PHInput from "@/components/Forms/PHInput";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -26,6 +28,16 @@ const LoginPage = () => {
     } catch (err: any) {
       console.error(err.message);
     }
+  };
+
+  const schema = z.object({
+    email: z.string().email(),
+    password: z.string().min(6),
+  });
+
+  const defaultValues = {
+    email: "",
+    password: "",
   };
 
   return (
@@ -63,7 +75,11 @@ const LoginPage = () => {
             </Box>
           </Stack>
           <Box>
-            <PHForm submit={onSubmit}>
+            <PHForm
+              submit={onSubmit}
+              resolver={zodResolver(schema)}
+              defaultValues={defaultValues}
+            >
               <Grid container spacing={2} my={1}>
                 <Grid item md={6}>
                   <PHInput

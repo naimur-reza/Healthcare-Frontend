@@ -6,18 +6,33 @@ import {
   SubmitHandler,
 } from "react-hook-form";
 
-const PHForm = ({
-  children,
-  submit,
-}: {
+type TFormConfig = {
+  resolver?: any;
+};
+
+type TProps = {
   children: ReactNode;
   submit: SubmitHandler<FieldValues>;
-}) => {
-  const methods = useForm();
+  defaultValues?: FieldValues;
+} & TFormConfig;
+
+const PHForm = ({ children, submit, resolver, defaultValues }: TProps) => {
+  const formConfig: TFormConfig = {};
+
+  if (resolver) {
+    formConfig.resolver = resolver;
+  }
+
+  if (defaultValues) {
+    formConfig.defaultValues = defaultValues;
+  }
+
+  const methods = useForm(formConfig);
   const { handleSubmit } = methods;
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     submit(data);
   };
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>{children}</form>
