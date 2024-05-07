@@ -4,7 +4,8 @@ import "./globals.css";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import Providers from "@/lib/Providers/Providers";
 import { Toaster } from "sonner";
-
+import { Provider } from "react-redux";
+import { store } from "@/redux/store";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,12 +22,14 @@ export default function RootLayout({
     <Providers>
       <html lang="en">
         <body className={inter.className}>
-          <AppRouterCacheProvider>
-            <>
-              <Toaster position="top-center" />
-              {children}
-            </>
-          </AppRouterCacheProvider>
+          <Provider store={store}>
+            <AppRouterCacheProvider>
+              <>
+                <Toaster position="top-center" />
+                {children}
+              </>
+            </AppRouterCacheProvider>
+          </Provider>
         </body>
       </html>
     </Providers>
