@@ -173,7 +173,14 @@ const RegisterPage = () => {
                 Register
               </Button>
               <Typography component="p" fontWeight={300}>
-                Do you already have an account? <Link href="/login">Login</Link>
+                Already have an account?{" "}
+                <Typography
+                  component="p"
+                  color={"primary.main"}
+                  fontWeight={300}
+                >
+                  <Link href="/login">Login</Link>
+                </Typography>
               </Typography>
             </PHForm>
           </Box>
