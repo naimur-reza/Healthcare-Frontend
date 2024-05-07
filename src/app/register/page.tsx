@@ -1,25 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import assets from "@/assets";
 import Link from "next/link";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 import { modifyPayload } from "@/utils/modifyPayload";
 import { registerPatient } from "@/services/actions/registerPatient";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { userLogin } from "@/services/actions/userLogin";
 import { storeUserInfo } from "@/services/auth.services";
+import PHForm from "@/components/Forms/PHForm";
+import PHInput from "@/components/Forms/PHInput";
 
 interface IPatientData {
   name: string;
@@ -36,16 +30,10 @@ interface IPatientRegisterFormData {
 const RegisterPage = () => {
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<IPatientRegisterFormData>();
 
-  const onSubmit: SubmitHandler<IPatientRegisterFormData> = async (values) => {
+  const onSubmit = async (values: FieldValues) => {
     const data = modifyPayload(values);
-    // console.log(data);
+    console.log(data);
     try {
       setLoading(true);
       const res = await registerPatient(data);
@@ -104,55 +92,50 @@ const RegisterPage = () => {
           </Stack>
 
           <Box>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <PHForm submit={onSubmit}>
               <Grid container spacing={2} my={1}>
                 <Grid item md={12}>
-                  <TextField
+                  <PHInput
                     label="Name"
-                    variant="outlined"
                     size="small"
                     fullWidth={true}
-                    {...register("patient.name")}
+                    name="patient.name"
                   />
                 </Grid>
                 <Grid item md={6}>
-                  <TextField
+                  <PHInput
                     label="Email"
                     type="email"
-                    variant="outlined"
                     size="small"
                     fullWidth={true}
-                    {...register("patient.email")}
+                    name="patient.email"
                   />
                 </Grid>
                 <Grid item md={6}>
-                  <TextField
+                  <PHInput
                     label="Password"
                     type="password"
-                    variant="outlined"
                     size="small"
                     fullWidth={true}
-                    {...register("password")}
+                    name="password"
                   />
                 </Grid>
                 <Grid item md={6}>
-                  <TextField
+                  <PHInput
                     label="Contact Number"
                     type="tel"
-                    variant="outlined"
                     size="small"
                     fullWidth={true}
-                    {...register("patient.contactNumber")}
+                    name="patient.contactNumber"
                   />
                 </Grid>
                 <Grid item md={6}>
-                  <TextField
+                  <PHInput
                     label="Address"
                     type="text"
-                    variant="outlined"
                     size="small"
                     fullWidth={true}
-                    {...register("patient.address")}
+                    name="patient.address"
                   />
                 </Grid>
               </Grid>
@@ -168,7 +151,7 @@ const RegisterPage = () => {
               <Typography component="p" fontWeight={300}>
                 Do you already have an account? <Link href="/login">Login</Link>
               </Typography>
-            </form>
+            </PHForm>
           </Box>
         </Box>
       </Stack>

@@ -63,7 +63,7 @@ const LoginPage = () => {
             </Box>
           </Stack>
           <Box>
-            <PHForm onSubmit={onSubmit}>
+            <PHForm submit={onSubmit}>
               <Grid container spacing={2} my={1}>
                 <Grid item md={6}>
                   <PHInput
