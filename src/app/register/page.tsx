@@ -18,18 +18,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 const RegisterPage = () => {
-  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState<string>("");
   const router = useRouter();
 
   const onSubmit = async (values: FieldValues) => {
     const data = modifyPayload(values);
     console.log(data);
     try {
-      setLoading(true);
       const res = await registerPatient(data);
       // console.log(res);
       if (res?.data?.id) {
-        setLoading(false);
         toast.success(res?.message);
         const result = await userLogin({
           password: values.password,
@@ -39,10 +37,11 @@ const RegisterPage = () => {
           storeUserInfo({ accessToken: result?.data?.accessToken });
           router.push("/");
         }
+      } else {
+        setError(res.message);
       }
     } catch (err: any) {
       console.error(err.message);
-      setLoading(false);
     }
   };
 
@@ -101,6 +100,17 @@ const RegisterPage = () => {
             </Box>
           </Stack>
 
+          {error && (
+            <Box
+              sx={{
+                mt: 2,
+              }}
+            >
+              <Typography color="red" fontWeight={600}>
+                {error}
+              </Typography>
+            </Box>
+          )}
           <Box>
             <PHForm
               submit={onSubmit}

@@ -12,9 +12,11 @@ import PHForm from "@/components/Forms/PHForm";
 import PHInput from "@/components/Forms/PHInput";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 
 const LoginPage = () => {
   const router = useRouter();
+  const [error, setError] = useState<string>("");
 
   const onSubmit = async (values: FieldValues) => {
     // console.log(values);
@@ -24,6 +26,9 @@ const LoginPage = () => {
         toast.success(res?.message);
         storeUserInfo({ accessToken: res?.data?.accessToken });
         router.push("/");
+      } else {
+        setError(res.message);
+        // console.log(res);
       }
     } catch (err: any) {
       console.error(err.message);
@@ -74,6 +79,19 @@ const LoginPage = () => {
               </Typography>
             </Box>
           </Stack>
+
+          {error && (
+            <Box
+              sx={{
+                mt: 2,
+              }}
+            >
+              <Typography color="red" fontWeight={600}>
+                {error}
+              </Typography>
+            </Box>
+          )}
+
           <Box>
             <PHForm
               submit={onSubmit}
