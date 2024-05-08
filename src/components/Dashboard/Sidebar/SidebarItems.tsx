@@ -6,11 +6,27 @@ import {
   ListItemText,
 } from "@mui/material";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const SidebarItems = (item: DrawerItem) => {
+  const linkPath = `/dashboard/${item.path}`;
+  const pathname = usePathname();
+
   return (
     <Link href={item.path}>
-      <ListItem key={item.title} disablePadding>
+      <ListItem
+        key={item.title}
+        disablePadding
+        sx={{
+          ...(pathname === linkPath && {
+            borderRight: "3px solid #1586FD",
+            "& svg": {
+              color: "#1586FD",
+            },
+          }),
+          mb: 1,
+        }}
+      >
         <ListItemButton>
           <ListItemIcon>
             <item.icon />

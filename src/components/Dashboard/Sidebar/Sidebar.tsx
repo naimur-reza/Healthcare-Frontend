@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import generateDrawerItems from "@/utils/generateDrawerItems";
 import SidebarItems from "./SidebarItems";
+import { UserRole } from "@/types";
 
 const Sidebar = () => {
   const role = "admin" as UserRole;
