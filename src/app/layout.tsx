@@ -22,14 +22,14 @@ export default function RootLayout({
     <Providers>
       <html lang="en">
         <body className={inter.className}>
-          <Provider store={store}>
-            <AppRouterCacheProvider>
-              <>
-                <Toaster position="top-center" />
-                {children}
-              </>
-            </AppRouterCacheProvider>
-          </Provider>
+          {/* <Provider store={store}> */}
+          <AppRouterCacheProvider>
+            <>
+              <Toaster position="top-center" />
+              {children}
+            </>
+          </AppRouterCacheProvider>
+          {/* </Provider> */}
         </body>
       </html>
     </Providers>
