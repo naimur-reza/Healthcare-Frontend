@@ -13,7 +13,7 @@ const SidebarItems = (item: DrawerItem) => {
   const pathname = usePathname();
 
   return (
-    <Link href={item.path}>
+    <Link href={linkPath}>
       <ListItem
         key={item.title}
         disablePadding

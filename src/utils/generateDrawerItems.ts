@@ -5,10 +5,9 @@ import GroupIcon from "@mui/icons-material/Group";
 import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import TryIcon from "@mui/icons-material/Try";
-import AirlineSeatIndividualSuiteIcon from "@mui/icons-material/AirlineSeatIndividualSuite";
 import ReviewsIcon from "@mui/icons-material/Reviews";
 
-const generateDrawerItems = (role: UserRole): DrawerItem[] => {
+const generateDrawerItems = (role: UserRole | undefined): DrawerItem[] => {
   const drawerItems: DrawerItem[] = [];
 
   switch (role) {

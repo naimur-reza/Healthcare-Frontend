@@ -5,11 +5,20 @@ import Link from "next/link";
 import generateDrawerItems from "@/utils/generateDrawerItems";
 import SidebarItems from "./SidebarItems";
 import { UserRole } from "@/types";
+import { getUserInfo } from "@/services/auth.services";
+import { useEffect, useState } from "react";
 
 const Sidebar = () => {
-  const role = "admin" as UserRole;
+  const userInfo = getUserInfo();
 
-  const drawerOptions = generateDrawerItems(role);
+  const [userRole, setUserRole] = useState<UserRole>();
+
+  useEffect(() => {
+    const { role } = userInfo;
+    setUserRole(role);
+  }, []);
+
+  const drawerOptions = generateDrawerItems(userRole);
 
   const drawer = (
     <div>
