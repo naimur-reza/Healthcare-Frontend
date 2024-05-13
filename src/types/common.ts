@@ -8,22 +8,28 @@ export type IMeta = {
   total: number;
 };
 
-export type TUserInfo = {
-  email: string;
-  exp: string;
-  iat: string;
-  role: UserRole;
-  userId: string;
-};
+export type UserRole = keyof typeof USER_ROLE;
 
-export type UserRole = (typeof USER_ROLE)[keyof typeof USER_ROLE];
-
-export type DrawerItem = {
+export interface DrawerItem {
   title: string;
   path: string;
   parentPath?: string;
-  icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
-    muiName: string;
-  };
+  icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">> & { muiName: string };
   child?: DrawerItem[];
+}
+
+export type ResponseSuccessType = {
+  data: any;
+  meta?: IMeta;
+};
+
+export type IGenericErrorResponse = {
+  statusCode: number;
+  message: string;
+  errorMessages: IGenericErrorMessage[];
+};
+
+export type IGenericErrorMessage = {
+  path: string | number;
+  message: string;
 };

@@ -1,9 +1,9 @@
-const Appointment = () => {
+const AppointmentsPage = () => {
   return (
     <div>
-      <h1> This is Appointment component </h1>
+      <h1>Appointments Page</h1>
     </div>
   );
 };
 
-export default Appointment;
+export default AppointmentsPage;

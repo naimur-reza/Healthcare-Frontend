@@ -4,9 +4,8 @@ import "./globals.css";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import Providers from "@/lib/Providers/Providers";
 import { Toaster } from "sonner";
-import { Provider } from "react-redux";
-import { store } from "@/redux/store";
-const inter = Inter({ subsets: ["latin"] });
+
+// const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "PH Health Care",
@@ -21,15 +20,13 @@ export default function RootLayout({
   return (
     <Providers>
       <html lang="en">
-        <body className={inter.className}>
-          {/* <Provider store={store}> */}
+        <body>
           <AppRouterCacheProvider>
             <>
               <Toaster position="top-center" />
               {children}
             </>
           </AppRouterCacheProvider>
-          {/* </Provider> */}
         </body>
       </html>
     </Providers>

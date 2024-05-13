@@ -1,9 +1,9 @@
-const Schedules = () => {
+const SchedulesPage = () => {
   return (
     <div>
-      <h1> This is Schedules component </h1>
+      <h1>Schedules Page </h1>
     </div>
   );
 };
 
-export default Schedules;
+export default SchedulesPage;

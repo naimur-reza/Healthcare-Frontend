@@ -1,13 +1,13 @@
 "use client";
-
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import assets from "@/assets";
 import Link from "next/link";
-import { FieldValues } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { userLogin } from "@/services/actions/userLogin";
 import { storeUserInfo } from "@/services/auth.services";
 import { toast } from "sonner";
+import { Router } from "next/router";
 import { useRouter } from "next/navigation";
 import PHForm from "@/components/Forms/PHForm";
 import PHInput from "@/components/Forms/PHInput";
@@ -15,11 +15,16 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 
+export const validationSchema = z.object({
+  email: z.string().email("Please enter a valid email address!"),
+  password: z.string().min(6, "Must be at least 6 characters"),
+});
+
 const LoginPage = () => {
   const router = useRouter();
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState("");
 
-  const onSubmit = async (values: FieldValues) => {
+  const handleLogin = async (values: FieldValues) => {
     // console.log(values);
     try {
       const res = await userLogin(values);
@@ -34,16 +39,6 @@ const LoginPage = () => {
     } catch (err: any) {
       console.error(err.message);
     }
-  };
-
-  const schema = z.object({
-    email: z.string().email(),
-    password: z.string().min(6),
-  });
-
-  const defaultValues = {
-    email: "",
-    password: "",
   };
 
   return (
@@ -82,12 +77,16 @@ const LoginPage = () => {
           </Stack>
 
           {error && (
-            <Box
-              sx={{
-                mt: 2,
-              }}
-            >
-              <Typography color="red" fontWeight={600}>
+            <Box>
+              <Typography
+                sx={{
+                  backgroundColor: "red",
+                  padding: "1px",
+                  borderRadius: "2px",
+                  color: "white",
+                  marginTop: "5px",
+                }}
+              >
                 {error}
               </Typography>
             </Box>
@@ -95,9 +94,12 @@ const LoginPage = () => {
 
           <Box>
             <PHForm
-              submit={onSubmit}
-              resolver={zodResolver(schema)}
-              defaultValues={defaultValues}
+              onSubmit={handleLogin}
+              resolver={zodResolver(validationSchema)}
+              defaultValues={{
+                email: "",
+                password: "",
+              }}
             >
               <Grid container spacing={2} my={1}>
                 <Grid item md={6}>
@@ -105,7 +107,6 @@ const LoginPage = () => {
                     name="email"
                     label="Email"
                     type="email"
-                    size="small"
                     fullWidth={true}
                   />
                 </Grid>
@@ -114,7 +115,6 @@ const LoginPage = () => {
                     name="password"
                     label="Password"
                     type="password"
-                    size="small"
                     fullWidth={true}
                   />
                 </Grid>
@@ -135,13 +135,7 @@ const LoginPage = () => {
               </Button>
               <Typography component="p" fontWeight={300}>
                 Don&apos;t have an account?{" "}
-                <Typography
-                  component="p"
-                  color={"primary.main"}
-                  fontWeight={300}
-                >
-                  <Link href="/register">Register</Link>
-                </Typography>
+                <Link href="/register">Create an account</Link>
               </Typography>
             </PHForm>
           </Box>

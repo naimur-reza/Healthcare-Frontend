@@ -1,18 +1,21 @@
 import { USER_ROLE } from "@/contants/role";
 import { DrawerItem, UserRole } from "@/types";
+
+//icons
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupIcon from "@mui/icons-material/Group";
 import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import TryIcon from "@mui/icons-material/Try";
 import ReviewsIcon from "@mui/icons-material/Reviews";
+import AirlineSeatIndividualSuiteIcon from "@mui/icons-material/AirlineSeatIndividualSuite";
+import TryIcon from "@mui/icons-material/Try";
 
-const generateDrawerItems = (role: UserRole | undefined): DrawerItem[] => {
-  const drawerItems: DrawerItem[] = [];
+export const drawerItems = (role: UserRole): DrawerItem[] => {
+  const roleMenus: DrawerItem[] = [];
 
   switch (role) {
     case USER_ROLE.SUPER_ADMIN:
-      drawerItems.push(
+      roleMenus.push(
         {
           title: "Dashboard",
           path: `${role}`,
@@ -27,7 +30,7 @@ const generateDrawerItems = (role: UserRole | undefined): DrawerItem[] => {
       break;
 
     case USER_ROLE.ADMIN:
-      drawerItems.push(
+      roleMenus.push(
         {
           title: "Dashboard",
           path: `${role}`,
@@ -62,7 +65,7 @@ const generateDrawerItems = (role: UserRole | undefined): DrawerItem[] => {
       break;
 
     case USER_ROLE.DOCTOR:
-      drawerItems.push(
+      roleMenus.push(
         {
           title: "Dashboard",
           path: `${role}`,
@@ -82,7 +85,7 @@ const generateDrawerItems = (role: UserRole | undefined): DrawerItem[] => {
       break;
 
     case USER_ROLE.PATIENT:
-      drawerItems.push(
+      roleMenus.push(
         {
           title: "Appointments",
           path: `${role}/appointments`,
@@ -105,7 +108,5 @@ const generateDrawerItems = (role: UserRole | undefined): DrawerItem[] => {
       break;
   }
 
-  return [...drawerItems];
+  return [...roleMenus];
 };
-
-export default generateDrawerItems;

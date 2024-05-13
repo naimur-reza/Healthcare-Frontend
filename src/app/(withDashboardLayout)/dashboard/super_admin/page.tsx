@@ -1,9 +1,11 @@
-const SuperAdmin = () => {
+import React from "react";
+
+const SuperAdminPage = () => {
   return (
     <div>
-      <h1> This is SuperAdmin component </h1>
+      <h1>Super Admin Dashboard</h1>
     </div>
   );
 };
 
-export default SuperAdmin;
+export default SuperAdminPage;

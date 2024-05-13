@@ -1,9 +1,9 @@
-const Dashboard = () => {
+const DashboardHomePage = () => {
   return (
     <div>
-      <h1> This is Dashboard component </h1>
+      <h1>Welcome to dashboard</h1>
     </div>
   );
 };
 
-export default Dashboard;
+export default DashboardHomePage;

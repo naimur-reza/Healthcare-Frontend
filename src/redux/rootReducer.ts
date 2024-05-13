@@ -1,5 +1,5 @@
 import { baseApi } from "./api/baseApi";
 
-export const rootReducer = {
+export const reducer = {
   [baseApi.reducerPath]: baseApi.reducer,
 };
